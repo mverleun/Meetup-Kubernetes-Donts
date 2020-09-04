@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: probes
+  name: probes
+  namespace: probes
+spec:
+  ports:
+  - name: tcp-9876
+    port: 80
+    protocol: TCP
+    targetPort: 9876
+  selector:
+    app: probes
+  type: ClusterIP
+status:
+  loadBalancer: {}

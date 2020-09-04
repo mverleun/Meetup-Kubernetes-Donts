@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: probes
+  name: probes
+  namespace: probes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: probes
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: probes
+    spec:
+      containers:
+      - image: mhausenblas/simpleservice:0.5.0
+      # https://github.com/mhausenblas/simpleservice
+        name: simpleservice
+        resources:
+          limits:
+            memory: "200Mi"
+        livenessProbe:
+          periodSeconds: 1
+          successThreshold: 1
+          failureThreshold: 2
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          exec:
+            command:
+              - /bin/bash
+              - /probes/livenessprobe.sh
+        readinessProbe:
+          periodSeconds: 3
+          successThreshold: 1
+          failureThreshold: 2
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          exec:
+           command:
+              - /bin/bash
+              - /probes/readinessprobe.sh
+        volumeMounts:
+        - name: probes
+          mountPath: "/probes"
+          readOnly: true  
+      volumes:
+        - name: probes
+          configMap:
+            name: probes
+status: {}

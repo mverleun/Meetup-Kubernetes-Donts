@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # The next line is for a minikube environment
-eval $(minikube -p minikube docker-env)
+eval "$(minikube -p minikube docker-env)"
 
 # https://docs.docker.com/engine/reference/commandline/stats/
 

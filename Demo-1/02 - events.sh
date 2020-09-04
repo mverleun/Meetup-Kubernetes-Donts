@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl get events -w
+kubectl get events -w -A

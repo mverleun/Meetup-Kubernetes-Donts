@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kubectl apply -f depolyment.yaml
+kubectl apply -f memory-waster.yaml
